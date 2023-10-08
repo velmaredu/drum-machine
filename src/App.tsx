@@ -1,6 +1,6 @@
 import React from 'react';
 import { Provider } from 'react-redux';
-import "./assets/App.css";
+import "./assets/styles/main.scss";
 import DrumMachine from './components/DrumMachine';
 import store from './store/store';
 

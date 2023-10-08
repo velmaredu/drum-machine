@@ -1,0 +1,23 @@
+@import "../variables.scss";
+
+#drum-machine {
+  margin: auto;
+  padding: 2rem;
+  background-color: $bg-dark-color;
+  border-radius: 20px;
+
+  #display {
+    align-items: center;
+    justify-content: center;
+    min-height: 4rem;
+    min-width: 10rem;
+    padding: 1rem 2rem;
+    background-color: gray;
+  }
+
+  #controls {
+    display: flex;
+    flex-direction: column;
+    gap: 3vh;
+  }
+}

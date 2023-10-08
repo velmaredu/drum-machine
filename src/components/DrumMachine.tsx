@@ -28,26 +28,22 @@ function DrumMachine() {
       <Col>
         <DrumPad isPowerOn={isPowerOn} updateDisplayText={updateDisplayText} />
       </Col>
-      <Col>
-        <Row className="switch">
-          <span>Power</span>
-          <Form.Check
-            type="switch"
-            id="power-switch"
-            checked={isPowerOn}
-            onChange={handlePowerSwitch}
-          />
-        </Row>
-        <Row id="display">{displayText}</Row>
-        <Row className="switch">
-          <span>Instrument</span>
-          <Form.Switch
-            id="instrument-switch"
-            className="custom-switch"
-            checked={isInstrument1}
-            onChange={handleInstrumentSwitch}
-          />
-        </Row>
+      <Col id="controls">
+        <Form.Switch
+          id="power-switch"
+          className="d-flex align-items-center m-auto"
+          label={<span className="text-white">Power</span>}
+          checked={isPowerOn}
+          onChange={handlePowerSwitch}
+        />
+        <Row id="display" className="text-white bg-gray">{displayText}</Row>
+        <Form.Switch
+          id="instrument-switch"
+          className="d-flex align-items-center m-auto"
+          label={<span className="text-white">Instrument</span>}
+          checked={isInstrument1}
+          onChange={handleInstrumentSwitch}
+        />
       </Col>
     </Row>
   );

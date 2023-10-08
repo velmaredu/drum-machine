@@ -25,30 +25,42 @@ function DrumPad(props: DrumPadProps) {
         playSound(audio);
     };
 
-    const handleKeyDown = (event: KeyboardEvent) => {
-        if (props.isPowerOn) {
-            const key = event.key.toUpperCase();
-            const button = document.querySelector(`button[data-key="${key}"]`);
-            if (button) {
-                const audio = button.querySelector("audio");
-                const soundName = audio?.getAttribute("data-sound-name") || "";
-                props.updateDisplayText(soundName)
-                playSound(audio);
-            }
-        }
-    };
-
     useEffect(() => {
-        window.addEventListener("keydown", handleKeyDown);
+        const handleKeyDown = (event: KeyboardEvent) => {
+            if (props.isPowerOn) {
+                const key = event.key.toUpperCase();
+                const button = document.querySelector(`button[data-key="${key}"]`);
+                if (button instanceof HTMLElement) {
+                    button.style.cssText = 'color: black !important; background-color: #ffd000 !important;';
+                    const audio = button.querySelector("audio");
+                    const soundName = audio?.getAttribute("data-sound-name");
+                    props.updateDisplayText(soundName)
+                    playSound(audio);
+                }
+            }
+        };
+
+        const handleKeyUp = (event: KeyboardEvent) => {
+            const key = event.key.toUpperCase();
+            const button = document.querySelector(`[data-key="${key}"]`);
+
+            if (button instanceof HTMLElement) {
+                button.style.cssText = ''; // Restablecer estilos en línea
+            }
+        };
+
+
+        document.addEventListener("keydown", handleKeyDown);
+        document.addEventListener('keyup', handleKeyUp);
 
         return () => {
-            window.removeEventListener("keydown", handleKeyDown);
+            document.removeEventListener("keydown", handleKeyDown);
+            document.removeEventListener('keyup', handleKeyUp);
         };
-    });
+    }, [props]);
 
     const playSound = (audio: HTMLAudioElement | null) => {
         if (audio) {
-            audio.currentTime = 0;
             audio.play();
         } else {
             console.log("No audio element found");
@@ -58,12 +70,13 @@ function DrumPad(props: DrumPadProps) {
     const createButton = (pad: Pad) => (
         <Button
             id={pad.name}
-            variant="primary"
             className="drum-pad"
+            variant="light"
             onClick={handleButtonClick}
             data-key={pad.key}
             key={pad.key}
             disabled={!props.isPowerOn}
+            active={true}
         >
             {pad.key}
             <audio
